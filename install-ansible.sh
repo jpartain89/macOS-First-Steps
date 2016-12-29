@@ -2,7 +2,14 @@
 
 # Installs Ansible and /etc/ansible files.
 
-for uPYTHON in [python2.7, python3.5, python3.6]; do
+PYTHONS=(
+python2.7
+python3.5
+python3.6
+)
+
+for uPYTHON in "${PYTHONS[@]}"
+do
     sudo chown -R jpartain89:staff "/usr/local/lib/$uPYTHON"
 done
 
