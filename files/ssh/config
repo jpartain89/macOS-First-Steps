@@ -5,12 +5,12 @@ Host rpi3-local
     Port 22235
 
 Host rpi3
-    HostName jpcdi.com
+    HostName 192.168.1.35
     User jpartain89
     ForwardAgent yes
-    ProxyJump rpi
     Port 22235
-
+    ProxyJump rpi
+ 
 Host base-ubuntu 
     HostName 192.168.1.20
     User jpartain89

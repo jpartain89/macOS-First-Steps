@@ -4,9 +4,21 @@
 # This file is meant to be downloaded direct, without git having already
 # existing.
 
-home_dir="/Users/$(logname)"
-git_dir="$home_dir/git"
-dot_loc="$git_dir/macos_dotfiles"
+# TODO: First, need to make a unified "unix-first-steps"  git repo id:3
+# ENHANCEMENT: Add in Linux/Debian/Unix commands that are "global" for universal use id:4
+# TODO: For the linux_dotfiles, remove the "non-dotfiles" files from the repo id:5
+
+if [[ $(uname) == "Darwin" ]]; then
+    HOME_DIR="/Users/$(logname)"
+    GIT_DIR="$HOME_DIR/git"
+    DOT_LOC="$GIT_DIR/macos_dotfiles"
+else
+    HOME_DIR="/home/$(logname)"
+    GIT_DIR="$HOME_DIR/git"
+    DOT_LOC="$GIT_DIR/linux_dotfiles"
+fi
+
+FIRST_STEPS="$GIT_DIR/unix-first-steps"
 
 install_xcode () {
     if [[ $(sudo xcode-select --install 2>/dev/null) == "1" ]] ; then
@@ -45,27 +57,37 @@ install_brew_apps () {
     /usr/local/bin/brew install rcmdnk/file/brew-file
 }
 
-macos_dotfile_clone () {
+install_git_apps () {
+    if [[ $(which -s git) == "1" ]]; then
+        echo ""
+        echo "Git is not installed."
+        echo "Probably a lot other items missing."
+        echo "Fixing."
+        echo ""
+        sudo apt-get install git git-core python python-pip make apt-transport-https libffi-dev libssl-dev zlib1g-dev libxslt1-dev libxml2-dev python-dev build-essential python2.7 python3.5 python3.5-pip python-setuptools unzip
+    fi
+}
+
+dotfile_clone () {
     # Make sure git_loc exists
-    if [[ ! -e "$git_dir" ]]; then
+    if [[ ! -e "$GIT_DIR" ]]; then
         echo ""
         echo "Creating the git directory location"
-        mkdir "$git_dir"
+        mkdir "$GIT_DIR"
     fi
 
     # Make sure the macos_dotfile repo is cloned
-    if [[ ! -e "$dot_loc" ]]; then
+    if [[ ! -e "$DOT_LOC" ]]; then
         echo ""
-        echo "MacOS Dotfiles git repo is not cloned locally, fixing."
-        git clone https://jpartain89@github.com/jpartain89/macos_dotfiles.git "$dot_loc"
+        echo "macOS Dotfiles git repo is not cloned locally, fixing."
+        git clone https://jpartain89@github.com/jpartain89/macos_dotfiles.git "$DOT_LOC"
     fi
-}
 
-install_pip_stuff () {
-    for iPIP in pip pip3
+    for iPIP in pip pip3 pip3.5
     do
         sudo -H "$iPIP" install --upgrade pip setuptools wheel
+        sudo -H "$iPIP" install --upgrade -r "$FIRST_STEPS/requirements.txt"
     done
 }
 
-install_xcode; install_homebrew; install_brew_apps; macos_dotfile_clone; install_pip_stuff; bash ./git_bootstrap.sh
+install_xcode; install_homebrew; install_brew_apps; dotfile_clone; install_pip_stuff; bash ./git_bootstrap.sh

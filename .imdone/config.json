@@ -1,0 +1,58 @@
+{
+  "exclude": [
+    "^(node_modules|bower_components|\\.imdone|target|build|dist|logs)[\\/\\\\]?|\\.(git|svn|hg|npmignore)|\\~$|\\.(jpg|png|gif|swp|ttf|otf)$"
+  ],
+  "watcher": true,
+  "keepEmptyPriority": true,
+  "code": {
+    "include_lists": [
+      "TODO",
+      "DOING",
+      "DONE",
+      "PLANNING",
+      "FIXME",
+      "ARCHIVE",
+      "HACK",
+      "CHANGED",
+      "XXX",
+      "IDEA",
+      "NOTE",
+      "REVIEW",
+      "ENHANCEMENT"
+    ]
+  },
+  "lists": [
+    {
+      "name": "ansible_ssh_common_args",
+      "hidden": true
+    },
+    {
+      "name": "TODO",
+      "hidden": false
+    },
+    {
+      "name": "ENHANCEMENT",
+      "hidden": false
+    }
+  ],
+  "marked": {
+    "gfm": true,
+    "tables": true,
+    "breaks": false,
+    "pedantic": false,
+    "smartLists": true,
+    "langPrefix": "language-"
+  },
+  "sync": {
+    "id": "58658763c9f97557e3e0c05b",
+    "name": "macOS-First-Steps",
+    "useImdoneioForPriority": true
+  },
+  "meta": {
+    "gh": {
+      "urlTemplate": "https://github.com/jpartain89/macOS-First-Steps/issues/%s",
+      "titleTemplate": "View github issue %s",
+      "icon": "icon-octoface"
+    }
+  }
+}
