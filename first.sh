@@ -62,7 +62,8 @@ macos_dotfile_clone () {
 }
 
 install_pip_stuff () {
-    for iPIP in [pip, pip3]; do
+    for iPIP in pip pip3
+    do
         sudo -H "$iPIP" install --upgrade pip setuptools wheel
     done
 }
