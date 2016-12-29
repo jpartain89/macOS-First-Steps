@@ -1,0 +1,51 @@
+[imac]
+imac ansible_host=192.168.1.15
+
+[macbook]
+macbook ansible_connection=local
+
+[macos:children]
+imac
+macbook
+
+[nginx]
+nginx ansible_host=jpcdi.com ansible_port=22230
+
+[webapps]
+webapps ansible_host=jpcdi.com ansible_port=22240
+
+[downloader]
+downloader ansible_host=jpcdi.com ansible_port=22245
+
+[mark-remote]
+mark-remote ansible_host=mdusa.jpcdi.com ansible_port=22
+
+[mark-local]
+mark-local ansible_host=192.168.86.111 ansible_port=22
+
+[rpi]
+rpi ansible_host=jpcdi.com ansible_port=22234
+
+[virtual:children]
+nginx
+webapps
+downloader
+
+[local-linux:children]
+virtual
+rpi
+
+[linux:children]
+local-linux
+mark-remote
+mark-local
+
+[x64-linux:children]
+virtual
+mark-remote
+mark-local
+
+# "webserver" means machines that are for the core webserver management
+[webserver:children]
+macos
+nginx

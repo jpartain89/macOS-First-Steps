@@ -1,0 +1,70 @@
+Host rpi3-local
+    HostName 192.168.1.35
+    User jpartain89
+    ForwardAgent yes
+    Port 22235
+
+Host rpi3
+    HostName jpcdi.com
+    User jpartain89
+    ForwardAgent yes
+    ProxyJump rpi
+    Port 22235
+
+Host base-ubuntu 
+    HostName 192.168.1.20
+    User jpartain89
+    ForwardAgent yes
+    ProxyJump rpi
+    Port 22220
+
+Host imac
+    HostName 192.168.1.15
+    User jpartain89
+    ForwardAgent yes
+    ProxyJump rpi
+
+Host nginx
+    HostName 192.168.1.30
+    User jpartain89
+    ForwardAgent yes
+    ProxyJump rpi
+    Port 22230
+
+Host web
+    HostName 192.168.1.40
+    User jpartain89
+    ForwardAgent yes
+    ProxyJump rpi
+    Port 22240
+
+Host downloader
+    HostName 192.168.1.45
+    User jpartain89
+    ForwardAgent yes
+    ProxyJump rpi
+    Port 22245
+
+Host rpi
+    HostName jpcdi.com
+    User jpartain89
+    ForwardAgent yes
+    Port 22234
+    ControlMaster auto
+    ControlPath ~/.ssh/%r@%h:%p
+    ControlPersist 5m
+
+Host rpi-local
+    HostName 192.168.1.34
+    ForwardAgent yes
+    Port 22234
+
+Host remote-mark
+    HostName mdusa.jpcdi.com
+    ForwardAgent yes
+    User jpartain89
+
+Host local-mark
+    HostName 192.168.86.111
+    ForwardAgent yes
+    User jpartain89

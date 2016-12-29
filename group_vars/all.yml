@@ -1,0 +1,16 @@
+---
+# group_vars/all.yml
+
+dotfiles_repo: "https://jpartain89@github.com/jpartain89/macos_dotfiles.git"
+dotfiles_repo_local_destination: "~/git/macos_dotfiles"
+dotfiles_home: "~"
+dotfiles_files:
+  - .aliases
+  - .bash_profile
+  - .bashrc
+  - .exports
+  - .functions
+  - .gitconfig
+  - .gitignore
+  - .macos
+  - .nanorc

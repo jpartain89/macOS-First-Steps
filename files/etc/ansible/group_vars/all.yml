@@ -1,0 +1,7 @@
+---
+# /etc/ansible/group_vars/all
+
+username: jpartain89
+git_loc: "{{ user_home }}/git"
+jp_git: https://jpartain89@github.com/jpartain89
+dot_bootstrap_loc: "{{ git_loc }}/{{ dot_dir_name }}"

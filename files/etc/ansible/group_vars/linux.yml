@@ -1,0 +1,8 @@
+---
+# /etc/ansible/group_vars/linux.yml
+
+#ansible_ssh_common_args: '-o ProxyJump=nginx'
+
+user_home: /home/{{ username }}
+pip_requirements: requirements-linux.txt
+dot_dir_name: linux_dotfiles
