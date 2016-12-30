@@ -4,18 +4,22 @@
 # This file is meant to be downloaded direct, without git having already
 # existing.
 
-# TODO: First, need to make a unified "unix-first-steps"  git repo id:3
-# ENHANCEMENT: Add in Linux/Debian/Unix commands that are "global" for universal use id:4
-# TODO: For the linux_dotfiles, remove the "non-dotfiles" files from the repo id:5
+# TODO: First, need to make a unified "unix-first-steps"  git repo
+# ENHANCEMENT: Add in Linux/Debian/Unix commands that are "global" for universal use
+# TODO: For the linux_dotfiles, remove the "non-dotfiles" files from the repo
 
 if [[ $(uname) == "Darwin" ]]; then
     HOME_DIR="/Users/$(logname)"
     GIT_DIR="$HOME_DIR/git"
     DOT_LOC="$GIT_DIR/macos_dotfiles"
-else
+elif [[ $(uname) == "Linux" ]]; then
     HOME_DIR="/home/$(logname)"
     GIT_DIR="$HOME_DIR/git"
     DOT_LOC="$GIT_DIR/linux_dotfiles"
+else
+    echo "Not sure what OS you're using... But you can't use this script with it."
+    echo "Sorry, exiting."
+    exit 1
 fi
 
 FIRST_STEPS="$GIT_DIR/unix-first-steps"
