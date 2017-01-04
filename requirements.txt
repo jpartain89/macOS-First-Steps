@@ -17,7 +17,6 @@ configparser
 cryptography
 decorator
 docutils
-doit
 entrypoints
 enum34
 Flask
@@ -38,8 +37,6 @@ isort
 itsdangerous
 Jinja2
 jsonschema
-jupyter-client
-jupyter-core
 lazy-object-proxy
 lint
 livereload
@@ -70,7 +67,6 @@ pickleshare
 piexif
 Pillow
 pip
-pip-review
 prompt-toolkit
 ptyprocess
 pyasn1
@@ -93,14 +89,11 @@ simplegeneric
 singledispatch
 six
 smartypants
-smmap
-smmap2
 snowballstemmer
 speedtest-cli
 Sphinx
 sphinx-rtd-theme
 sphinxsearch
-terminado
 tornado
 traitlets
 typogrify
@@ -108,7 +101,6 @@ Unidecode
 virtualenv
 wakatime
 watchdog
-wcwidth
 webassets
 Werkzeug
 wheel

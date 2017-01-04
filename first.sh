@@ -8,23 +8,21 @@
 # ENHANCEMENT: Add in Linux/Debian/Unix commands that are "global" for universal use
 # TODO: For the linux_dotfiles, remove the "non-dotfiles" files from the repo
 
-if [[ $(uname) == "Darwin" ]]; then
-    HOME_DIR="/Users/$(logname)"
-    GIT_DIR="$HOME_DIR/git"
-    DOT_LOC="$GIT_DIR/macos_dotfiles"
-elif [[ $(uname) == "Linux" ]]; then
-    HOME_DIR="/home/$(logname)"
-    GIT_DIR="$HOME_DIR/git"
-    DOT_LOC="$GIT_DIR/linux_dotfiles"
-else
-    echo "Not sure what OS you're using... But you can't use this script with it."
-    echo "Sorry, exiting."
-    exit 1
-fi
+WORKDIR=$(pwd)
+if [ ! -e "$(which allunix)" ]; then ALLUNIX=$(which allunix); fi
+    if ((ALLUNIX)); then . "$ALLUNIX"
+    else
+        echo ""
+        echo "Sorry, but it looks like the AllUnix functions file is not installed on your system."
+        echo "See github.com/jpartain89/myfunctions for more information."
+        exit 1;
+    fi
+INCLUDEDIR=""
+if [ -d "${WORKDIR}/include" ]; then INCLUDEDIR="${WORKDIR}/include"; fi
+    . "${INCLUDEDIR}/osdetection"
 
-FIRST_STEPS="$GIT_DIR/unix-first-steps"
 
-install_xcode () {
+macos_pre () {
     if [[ $(sudo xcode-select --install 2>/dev/null) == "1" ]] ; then
         echo ""
         echo "Looks like you already installed xcode's CLI stuff"
@@ -32,9 +30,6 @@ install_xcode () {
         echo ""
         read -r
     fi
-}
-
-install_homebrew () {
     if [[ $(which -s brew) == "1" ]]; then
         echo ""
         echo "Homebrew is not installed yet. Fixing that"

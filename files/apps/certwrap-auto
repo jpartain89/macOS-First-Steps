@@ -1,0 +1,38 @@
+#!/bin/bash -e
+
+# My wrapper script for certbot-auto
+
+ALLUNIX=""
+if [ -e "$(which allunix)" ]; then
+    ALLUNIX=$(which allunix)
+else
+    echo ""
+    echo "For some reason, we're unable to find the AllUnix Source file."
+    echo "You need to fix this before running this script again."
+    exit 1
+fi
+
+if [ ! -z "${ALLUNIX}" ]; then
+    . "${ALLUNIX}"
+fi
+
+yes_sudo
+
+certbot_auto_wrap(){
+    # This is to hold all of the options that can't/won't go into the
+    # letsencrypt cli.ini file.
+
+    certbot-auto certonly -n --expand --must-staple --hsts --uir --staple-ocsp \
+        --pre-hook 'sudo nginx -s stop; sudo monit stop nginx' \
+        --post-hook 'sudo nginx -t && sudo monit start nginx'
+}
+certbot_auto_test(){
+    certbot-auto certonly -n --expand --must-staple --hsts --uir --staple-ocsp \
+        --pre-hook 'sudo nginx -s stop; sudo monit stop nginx' \
+        --post-hook 'sudo nginx -t && sudo monit start nginx' \
+        --dry-run
+}
+
+while [[ $# -ge 0 ]]; do
+    case $1 in
+        -t | --test )
