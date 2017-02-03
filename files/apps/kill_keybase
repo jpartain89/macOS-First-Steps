@@ -2,8 +2,7 @@
 
 # Short script to kill all Keybase Services
 
-. "$HOME/git/myfunctions/allunix"
-
+source allunix
 no_sudo
 
 if [[ -e /usr/local/bin/keybase ]]; then

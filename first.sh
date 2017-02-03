@@ -8,35 +8,38 @@
 # ENHANCEMENT: Add in Linux/Debian/Unix commands that are "global" for universal use
 # TODO: For the linux_dotfiles, remove the "non-dotfiles" files from the repo
 
+if [[ $(uname) == "Darwin" ]]; then
+    USER_HOME=/Users/jpartain89
+    GIT_DIR="$USER_HOME/git"
+    FIRST_STEPS="$GIT_DIR/macos-first-steps"
+fi
+
 WORKDIR=$(pwd)
-if [ ! -e "$(which allunix)" ]; then ALLUNIX=$(which allunix); fi
-    if ((ALLUNIX)); then . "$ALLUNIX"
+if [[ -e "$(which allunix)" ]]; then ALLUNIX=$(which allunix); fi
+    if [[ "$ALLUNIX" ]]; then . "$ALLUNIX"
     else
         echo ""
         echo "Sorry, but it looks like the AllUnix functions file is not installed on your system."
         echo "See github.com/jpartain89/myfunctions for more information."
         exit 1;
     fi
-INCLUDEDIR=""
-if [ -d "${WORKDIR}/include" ]; then INCLUDEDIR="${WORKDIR}/include"; fi
-    . "${INCLUDEDIR}/osdetection"
 
 
 macos_pre () {
-    if [[ $(sudo xcode-select --install 2>/dev/null) == "1" ]] ; then
+    if [[ $(xcode-select --install 2>/dev/null) == "1" ]] ; then
         echo ""
         echo "Looks like you already installed xcode's CLI stuff"
         echo "Press Enter to Continue..."
         echo ""
         read -r
     fi
-    if [[ $(which -s brew) == "1" ]]; then
+    if [[ $(which brew) == "" ]]; then
         echo ""
         echo "Homebrew is not installed yet. Fixing that"
         echo ""
         /usr/bin/ruby -e "$(curl -fsSL  https://raw.githubusercontent.com/Homebrew/install/master/install)"
         echo "Running brew doctor"
-        /usr/local/bin/brew doctor
+         /usr/local/bin/brew doctor
         echo "Press Enter to Continue "
         read -r
         echo "Running brew update"
@@ -69,24 +72,24 @@ install_git_apps () {
 
 dotfile_clone () {
     # Make sure git_loc exists
-    if [[ ! -e "$GIT_DIR" ]]; then
+    if [[ ! -d "$GIT_DIR" ]]; then
         echo ""
         echo "Creating the git directory location"
-        mkdir "$GIT_DIR"
+        mkdir "$GIT_DIR" 2>/dev/null
     fi
 
     # Make sure the macos_dotfile repo is cloned
-    if [[ ! -e "$DOT_LOC" ]]; then
+    if [[ ! -e "$GIT_DIR/dotfiles" ]]; then
         echo ""
-        echo "macOS Dotfiles git repo is not cloned locally, fixing."
-        git clone https://jpartain89@github.com/jpartain89/macos_dotfiles.git "$DOT_LOC"
+        echo "Dotfiles git repo is not cloned locally, fixing."
+        git clone https://jpartain89@github.com/jpartain89/dotfiles.git "$GIT_DIR/dotfiles"
     fi
 
-    for iPIP in pip pip3 pip3.5
+    for iPIP in pip pip3 pip3.5 pip3.6;
     do
         sudo -H "$iPIP" install --upgrade pip setuptools wheel
         sudo -H "$iPIP" install --upgrade -r "$FIRST_STEPS/requirements.txt"
     done
 }
 
-install_xcode; install_homebrew; install_brew_apps; dotfile_clone; install_pip_stuff; bash ./git_bootstrap.sh
+macos_pre && install_brew_apps; dotfile_clone; bash ./git_bootstrap.sh

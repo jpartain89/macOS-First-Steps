@@ -1,28 +1,25 @@
+Host rpi3-R
+    HostName jpcdi.com
+    User jpartain89
+    ForwardAgent yes
+    Port 22235
+    ControlMaster auto
+    ControlPath ~/.ssh/%r@%h:%p
+    ControlPersist 5m
+
 Host *-remote
-    ProxyJump rpi
+    ProxyJump rpi3-R
 
 Host rpi3
     HostName 192.168.1.35
     User jpartain89
     ForwardAgent yes
     Port 22235
- 
-Host bounca
-    HostName 192.168.1.20
-    User jpartain89
-    ForwardAgent yes
-#    Port 22220
 
 Host imac
     HostName 192.168.1.15
     User jpartain89
     ForwardAgent yes
-
-Host nginx
-    HostName 192.168.1.30
-    User jpartain89
-    ForwardAgent yes
-    Port 22230
 
 Host web
     HostName 192.168.1.40

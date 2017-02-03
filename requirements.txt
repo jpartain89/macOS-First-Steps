@@ -1,5 +1,4 @@
 alabaster
-ansible
 appnope
 argh
 astroid
