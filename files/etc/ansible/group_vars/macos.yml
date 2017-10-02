@@ -1,6 +1,0 @@
----
-# /etc/ansible/group_vars/macos
-
-user_home: /Users/{{ username }}
-pip_requirements: requirements-macos.txt
-dot_dir_name: macos_dotfiles
